@@ -1,2 +1,1 @@
-# CPE3150
-Microcontrollers
+# CPE3150 - Microcontrollers
