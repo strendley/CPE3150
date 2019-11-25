@@ -49,6 +49,20 @@ Problems we encountered while programming the up-down counter include:
 - WrapSound - When attempting to make the buzzer sound activate upon wraparound, we noticed our program would get caught at 15 or would not do an immediate decrement at 0, and the microcontroller made a faint attempt to activate the buzzer’s sound. By commenting out wrapSound, we found that the wraparound operations were fine, but the wrapSound was entering an infinite loop that it could not jump out of. During further inspection of the wrapSound function, we found that we had been complimenting in the wrong place and needed a loop to TF1 to wait for the MC delay. This problem was fixed and the buzzer sound activated properly.
 - Debounce - For the count to not immediately increment more than one time per button press, delays were used in the inc and dec functions to slow down the process as pressing the switch one time could send more than one signal to the microcontroller. Before this was perfected, the MCU thought that the switch was being activated more than it actually was.
 
+### The Parity Machine
+
+**Summary**
+
+For my individual portion, I decided to implement a parity machine into the 8051 microcontroller. In order to implement this, I decided to use the accumulator to do a rotate right on the bits, allowing me to return the remaining bits in the accumulator and jump to an oddPar function if the bits were set, and stay inside an evenPar function if they were not. I decided to display this by using 2 LEDs to represent even parity, and 1 LED to represent odd parity.
+
+**Problems:**
+
+A couple problems that I encountered was that first I attempted to use the PSW port 0 of the accumulator to determine the parity. This would not work because of the way the microcontroller was set up and it would always return a wrong result based on what was possibly in the higher nibble. In order to properly implement a parity checker, I switched our main count storage into register 0 and passed it into the accumulator when my button was called. 
+
+**Simon Board:**
+
+I used p2.1 to monitor the call to my parity checker program, and utilized P2.6 (amber LED) to represent odd parity, as well as P0.7 (green LED) simultaneously with P2.6 to represent even parity. The parity code is shown in a separate file named parity.asm.
+
 
 ### Simon Board Assignments for Main Program:
 - P0.3 - SW8 - will increment R0 and display value when pressed
